@@ -33,10 +33,10 @@ export const CustomCoinDesigner: React.FC<CustomCoinDesignerProps> = ({
           <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">
             Make it yours
           </span>
-          <h3 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
-            <Palette className="w-5 h-5 text-amber-500" />
+          <h2 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Palette className="w-5 h-5 text-amber-500" aria-hidden="true" />
             Design your coin
-          </h3>
+          </h2>
         </div>
 
         <button
@@ -50,10 +50,11 @@ export const CustomCoinDesigner: React.FC<CustomCoinDesignerProps> = ({
               style: 'gold',
             })
           }
-          className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-amber-600 transition-colors p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-700"
+          className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-amber-600 transition-colors min-h-[44px] px-3 py-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           title="Reset coin design"
+          aria-label="Reset coin design to defaults"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
+          <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
           Reset Default
         </button>
       </div>
@@ -131,7 +132,7 @@ export const CustomCoinDesigner: React.FC<CustomCoinDesignerProps> = ({
                   tailsLabel: p.tLab,
                 })
               }
-              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-zinc-800 dark:text-zinc-200 transition-colors"
+              className="min-h-[36px] px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-zinc-800 dark:text-zinc-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
             >
               {p.name} ({p.hSym} / {p.tSym})
             </button>
@@ -146,23 +147,29 @@ export const CustomCoinDesigner: React.FC<CustomCoinDesignerProps> = ({
             Heads Configuration
           </span>
           <div className="space-y-1">
-            <label className="text-xs text-zinc-500 dark:text-zinc-400">Symbol (1 or 2 characters)</label>
+            <label htmlFor="heads-symbol-input" className="text-xs text-zinc-500 dark:text-zinc-400 cursor-pointer block">
+              Symbol (1 or 2 characters)
+            </label>
             <input
+              id="heads-symbol-input"
               type="text"
               maxLength={2}
               value={customization.headsSymbol}
               onChange={(e) => onChange({ headsSymbol: e.target.value.toUpperCase() || 'H' })}
-              className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 font-semibold text-center text-zinc-900 dark:text-white"
+              className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 font-semibold text-center text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs text-zinc-500 dark:text-zinc-400">Edge Label:</label>
+            <label htmlFor="heads-label-input" className="text-xs text-zinc-500 dark:text-zinc-400 cursor-pointer block">
+              Edge Label:
+            </label>
             <input
+              id="heads-label-input"
               type="text"
               maxLength={10}
               value={customization.headsLabel}
               onChange={(e) => onChange({ headsLabel: e.target.value.toUpperCase() || 'HEADS' })}
-              className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 font-semibold text-center text-zinc-900 dark:text-white"
+              className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 font-semibold text-center text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
         </div>
@@ -172,23 +179,29 @@ export const CustomCoinDesigner: React.FC<CustomCoinDesignerProps> = ({
             Tails Configuration
           </span>
           <div className="space-y-1">
-            <label className="text-xs text-zinc-500 dark:text-zinc-400">Symbol (1 or 2 characters)</label>
+            <label htmlFor="tails-symbol-input" className="text-xs text-zinc-500 dark:text-zinc-400 cursor-pointer block">
+              Symbol (1 or 2 characters)
+            </label>
             <input
+              id="tails-symbol-input"
               type="text"
               maxLength={2}
               value={customization.tailsSymbol}
               onChange={(e) => onChange({ tailsSymbol: e.target.value.toUpperCase() || 'T' })}
-              className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 font-semibold text-center text-zinc-900 dark:text-white"
+              className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 font-semibold text-center text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs text-zinc-500 dark:text-zinc-400">Edge Label:</label>
+            <label htmlFor="tails-label-input" className="text-xs text-zinc-500 dark:text-zinc-400 cursor-pointer block">
+              Edge Label:
+            </label>
             <input
+              id="tails-label-input"
               type="text"
               maxLength={10}
               value={customization.tailsLabel}
               onChange={(e) => onChange({ tailsLabel: e.target.value.toUpperCase() || 'TAILS' })}
-              className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 font-semibold text-center text-zinc-900 dark:text-white"
+              className="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 font-semibold text-center text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
         </div>

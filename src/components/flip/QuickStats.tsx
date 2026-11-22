@@ -22,21 +22,21 @@ export const QuickStats: React.FC<QuickStatsProps> = ({ stats, customization }) 
   return (
     <div className="w-full max-w-2xl mx-auto bg-white dark:bg-zinc-800/90 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-700 shadow-sm space-y-6">
       {/* Primary Counters */}
-      <div className="grid grid-cols-3 gap-3 text-center">
-        <div className="p-3 bg-zinc-50 dark:bg-zinc-900/60 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
+        <div className="p-2.5 sm:p-3 bg-zinc-50 dark:bg-zinc-900/60 rounded-2xl border border-zinc-100 dark:border-zinc-800">
           <span className="block text-xs font-semibold text-zinc-500 dark:text-zinc-400">
             Total Flips
           </span>
-          <span className="text-2xl sm:text-3xl font-semibold text-zinc-900 dark:text-white">
+          <span className="text-base xs:text-xl sm:text-2xl lg:text-3xl font-semibold tabular-nums text-zinc-900 dark:text-white break-all">
             {stats.totalFlips.toLocaleString()}
           </span>
         </div>
 
-        <div className="p-3 bg-amber-50/70 dark:bg-amber-950/30 rounded-2xl border border-amber-100 dark:border-amber-900/40">
+        <div className="p-2.5 sm:p-3 bg-amber-50/70 dark:bg-amber-950/30 rounded-2xl border border-amber-100 dark:border-amber-900/40">
           <span className="block text-xs font-semibold text-amber-700 dark:text-amber-400">
             {customization.headsLabel}
           </span>
-          <span className="text-2xl sm:text-3xl font-semibold text-amber-600 dark:text-amber-400">
+          <span className="text-base xs:text-xl sm:text-2xl lg:text-3xl font-semibold tabular-nums text-amber-600 dark:text-amber-400 break-all">
             {stats.heads.toLocaleString()}
           </span>
           <span className="block text-xs font-semibold text-amber-700/80 dark:text-amber-400/80 mt-0.5">
@@ -44,11 +44,11 @@ export const QuickStats: React.FC<QuickStatsProps> = ({ stats, customization }) 
           </span>
         </div>
 
-        <div className="p-3 bg-indigo-50/70 dark:bg-indigo-950/30 rounded-2xl border border-indigo-100 dark:border-indigo-900/40">
+        <div className="p-2.5 sm:p-3 bg-indigo-50/70 dark:bg-indigo-950/30 rounded-2xl border border-indigo-100 dark:border-indigo-900/40">
           <span className="block text-xs font-semibold text-indigo-700 dark:text-indigo-400">
             {customization.tailsLabel}
           </span>
-          <span className="text-2xl sm:text-3xl font-semibold text-indigo-600 dark:text-indigo-400">
+          <span className="text-base xs:text-xl sm:text-2xl lg:text-3xl font-semibold tabular-nums text-indigo-600 dark:text-indigo-400 break-all">
             {stats.tails.toLocaleString()}
           </span>
           <span className="block text-xs font-semibold text-indigo-700/80 dark:text-indigo-400/80 mt-0.5">
@@ -66,7 +66,7 @@ export const QuickStats: React.FC<QuickStatsProps> = ({ stats, customization }) 
               className="cursor-help text-zinc-400"
               title="How your flips have split so far. The more you flip, the closer it gets to 50%."
             >
-              <HelpCircle className="w-3.5 h-3.5" />
+              <HelpCircle className="w-3.5 h-3.5" aria-hidden="true" />
             </span>
           </span>
           <span className="text-zinc-500 dark:text-zinc-400">
@@ -75,23 +75,31 @@ export const QuickStats: React.FC<QuickStatsProps> = ({ stats, customization }) 
         </div>
 
         {hasFlips ? (
-          <div className="h-6 w-full bg-zinc-100 dark:bg-zinc-900 rounded-full overflow-hidden flex shadow-inner relative">
+          <div
+            role="meter"
+            aria-valuenow={stats.headsPercentage}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Observed distribution: ${stats.headsPercentage}% heads, ${stats.tailsPercentage}% tails`}
+            className="h-6 w-full bg-zinc-100 dark:bg-zinc-900 rounded-full overflow-hidden flex shadow-inner relative"
+          >
             {/* Center 50% marker line */}
             <div
               className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-black/30 dark:bg-white/40 z-10"
               title="50% line"
+              aria-hidden="true"
             />
             <div
               className="h-full bg-heads-400 transition-all duration-300 flex items-center justify-start px-2 text-xs font-semibold text-amber-950 select-none overflow-hidden"
               style={{ width: `${stats.headsPercentage}%` }}
-              aria-label={`Heads observed: ${stats.headsPercentage}%`}
+              aria-hidden="true"
             >
               {stats.headsPercentage >= 15 ? `${stats.headsPercentage}%` : ''}
             </div>
             <div
               className="h-full bg-tails-500 transition-all duration-300 flex items-center justify-end px-2 text-xs font-semibold text-white select-none overflow-hidden"
               style={{ width: `${stats.tailsPercentage}%` }}
-              aria-label={`Tails observed: ${stats.tailsPercentage}%`}
+              aria-hidden="true"
             >
               {stats.tailsPercentage >= 15 ? `${stats.tailsPercentage}%` : ''}
             </div>

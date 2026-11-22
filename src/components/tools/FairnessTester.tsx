@@ -18,10 +18,10 @@ export const FairnessTester: React.FC = () => {
         <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
           Educational Experiment
         </span>
-        <h3 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
-          <Scale className="w-5 h-5 text-emerald-500" />
+        <h2 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
+          <Scale className="w-5 h-5 text-emerald-500" aria-hidden="true" />
           Is your real coin fair?
-        </h3>
+        </h2>
         <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
           Flip a real coin a bunch of times, enter how many heads and tails you got, and see how far it is from 50/50.
         </p>
@@ -30,30 +30,32 @@ export const FairnessTester: React.FC = () => {
       {/* Inputs */}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1.5 p-4 bg-amber-50/70 dark:bg-amber-950/30 rounded-2xl border border-amber-100 dark:border-amber-900/40">
-          <label className="text-xs font-semibold text-amber-800 dark:text-amber-300">
+          <label htmlFor="observed-heads" className="text-xs font-semibold text-amber-800 dark:text-amber-300 cursor-pointer block">
             Observed Heads
           </label>
           <input
+            id="observed-heads"
             type="number"
             min="0"
             max="100000"
             value={headsInput}
             onChange={(e) => setHeadsInput(e.target.value)}
-            className="w-full px-3 py-2 text-xl font-mono font-semibold text-center rounded-xl bg-white dark:bg-zinc-800 border border-amber-200 dark:border-amber-800 text-zinc-900 dark:text-white"
+            className="w-full px-3 py-2 text-xl font-mono font-semibold text-center rounded-xl bg-white dark:bg-zinc-800 border border-amber-200 dark:border-amber-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
         </div>
 
         <div className="space-y-1.5 p-4 bg-indigo-50/70 dark:bg-indigo-950/30 rounded-2xl border border-indigo-100 dark:border-indigo-900/40">
-          <label className="text-xs font-semibold text-indigo-800 dark:text-indigo-300">
+          <label htmlFor="observed-tails" className="text-xs font-semibold text-indigo-800 dark:text-indigo-300 cursor-pointer block">
             Observed Tails
           </label>
           <input
+            id="observed-tails"
             type="number"
             min="0"
             max="100000"
             value={tailsInput}
             onChange={(e) => setTailsInput(e.target.value)}
-            className="w-full px-3 py-2 text-xl font-mono font-semibold text-center rounded-xl bg-white dark:bg-zinc-800 border border-indigo-200 dark:border-indigo-800 text-zinc-900 dark:text-white"
+            className="w-full px-3 py-2 text-xl font-mono font-semibold text-center rounded-xl bg-white dark:bg-zinc-800 border border-indigo-200 dark:border-indigo-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
       </div>

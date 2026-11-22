@@ -43,18 +43,18 @@ export const DecisionMaker: React.FC<DecisionMakerProps> = ({
           <span className="text-xs font-semibold text-tails-600 dark:text-tails-400">
             Decision Helper
           </span>
-          <h3 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
-            <Shuffle className="w-5 h-5 text-tails-500" />
+          <h2 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
+            <Shuffle className="w-5 h-5 text-tails-500" aria-hidden="true" />
             Your two options
-          </h3>
+          </h2>
         </div>
 
         <button
           type="button"
           onClick={handleReset}
-          className="text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-700 flex items-center gap-1.5"
+          className="text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 min-h-[44px] px-3 py-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-700 flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
+          <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
           Reset Options
         </button>
       </div>
@@ -67,21 +67,22 @@ export const DecisionMaker: React.FC<DecisionMakerProps> = ({
             : 'bg-zinc-50 dark:bg-zinc-900/40 border-zinc-200 dark:border-zinc-800'
         }`}>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="text-xs font-semibold text-amber-700 dark:text-amber-400">
-              Heads
+            <label htmlFor="decision-option-a" className="text-xs font-semibold text-amber-700 dark:text-amber-400 cursor-pointer">
+              Heads (Option A)
             </label>
             {decision.lastSelected === 'A' && (
               <span className="text-xs font-semibold text-amber-600 flex items-center gap-1">
-                <CheckCircle className="w-3.5 h-3.5" /> Selected
+                <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" /> Selected
               </span>
             )}
           </div>
           <input
+            id="decision-option-a"
             type="text"
             value={optA}
             placeholder="e.g. Eat out"
             onChange={(e) => setOptA(e.target.value)}
-            className="w-full px-3 py-2 text-base font-semibold rounded-xl bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-3 py-2.5 text-base font-semibold rounded-xl bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
         </div>
 
@@ -91,21 +92,22 @@ export const DecisionMaker: React.FC<DecisionMakerProps> = ({
             : 'bg-zinc-50 dark:bg-zinc-900/40 border-zinc-200 dark:border-zinc-800'
         }`}>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="text-xs font-semibold text-indigo-700 dark:text-indigo-400">
-              Tails
+            <label htmlFor="decision-option-b" className="text-xs font-semibold text-indigo-700 dark:text-indigo-400 cursor-pointer">
+              Tails (Option B)
             </label>
             {decision.lastSelected === 'B' && (
               <span className="text-xs font-semibold text-indigo-600 flex items-center gap-1">
-                <CheckCircle className="w-3.5 h-3.5" /> Selected
+                <CheckCircle className="w-3.5 h-3.5" aria-hidden="true" /> Selected
               </span>
             )}
           </div>
           <input
+            id="decision-option-b"
             type="text"
             value={optB}
             placeholder="e.g. Cook at home"
             onChange={(e) => setOptB(e.target.value)}
-            className="w-full px-3 py-2 text-base font-semibold rounded-xl bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2.5 text-base font-semibold rounded-xl bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
       </div>

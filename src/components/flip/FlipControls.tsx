@@ -42,12 +42,12 @@ export const FlipControls: React.FC<FlipControlsProps> = ({
   };
 
   const pill = (active: boolean, side: CoinSide) =>
-    `h-10 rounded-lg border px-4 text-sm font-medium transition-colors disabled:opacity-50 ${
+    `min-h-[44px] rounded-xl border px-5 text-sm font-medium transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
       active
         ? side === 'heads'
-          ? 'border-heads-500 bg-heads-400 text-zinc-950'
-          : 'border-tails-600 bg-tails-600 text-white'
-        : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800'
+          ? 'border-heads-500 bg-heads-400 text-zinc-950 focus-visible:ring-heads-500'
+          : 'border-tails-600 bg-tails-600 text-white focus-visible:ring-tails-600'
+        : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800 focus-visible:ring-heads-400'
     }`;
 
   return (
@@ -115,7 +115,7 @@ export const FlipControls: React.FC<FlipControlsProps> = ({
               type="button"
               disabled={isFlipping}
               onClick={() => onBatchFlip(count)}
-              className="h-8 rounded-lg border border-zinc-200 bg-white px-3 text-sm tabular-nums text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              className="min-h-[40px] rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-sm tabular-nums text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400"
             >
               {count.toLocaleString()}
             </button>
@@ -124,7 +124,7 @@ export const FlipControls: React.FC<FlipControlsProps> = ({
             type="button"
             disabled={isFlipping}
             onClick={() => setShowCustomModal(true)}
-            className="h-8 rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            className="min-h-[40px] rounded-lg border border-zinc-200 bg-white px-3.5 py-1.5 text-sm text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400"
           >
             Other…
           </button>

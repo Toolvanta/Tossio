@@ -16,13 +16,13 @@ export const PredictionGameCard: React.FC<PredictionGameCardProps> = ({ predicti
     <div className="bg-white dark:bg-zinc-800/90 rounded-2xl p-6 border border-zinc-200 dark:border-zinc-700 shadow-sm space-y-5">
       <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-700/60 pb-3">
         <div className="flex items-center gap-2">
-          <Target className="w-5 h-5 text-indigo-500" />
-          <h3 className="text-base font-semibold text-zinc-900 dark:text-white">
+          <Target className="w-5 h-5 text-indigo-500" aria-hidden="true" />
+          <h2 className="text-base font-semibold text-zinc-900 dark:text-white">
             Your predictions
-          </h3>
+          </h2>
         </div>
         <div className="flex items-center gap-1.5 px-3 py-1 bg-amber-50 dark:bg-amber-950/40 rounded-full border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 font-semibold text-xs">
-          <Sparkles className="w-3.5 h-3.5" />
+          <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
           Score: {predictionStats.score} pts
         </div>
       </div>

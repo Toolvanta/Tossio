@@ -1,18 +1,22 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { BarChart3, ChevronDown, Menu, Moon, Sun, Volume2, VolumeX, X } from 'lucide-react';
 import { Logo } from './Logo';
 import { LEARN_NAV, PRIMARY_NAV, SITE_LINKS } from './nav';
 import { useCoinFlipGame } from '../../context/CoinFlipContext';
 
 const iconButton =
-  'inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white';
+  'inline-flex min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 sm:min-h-[36px] sm:min-w-[36px] items-center justify-center rounded-lg text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400';
 
 const useIsDark = () => {
-  const [dark, setDark] = useState(() => typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+  const [dark, setDark] = useState(false);
   useEffect(() => {
     const root = document.documentElement;
+    setDark(root.classList.contains('dark'));
     const sync = () => setDark(root.classList.contains('dark'));
     const obs = new MutationObserver(sync);
     obs.observe(root, { attributes: true, attributeFilter: ['class'] });
@@ -28,12 +32,12 @@ export const Header: React.FC = () => {
   const [learnOpen, setLearnOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const learnRef = useRef<HTMLDivElement>(null);
-  const location = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     setLearnOpen(false);
     setMobileOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     if (!learnOpen) return;
@@ -65,7 +69,7 @@ export const Header: React.FC = () => {
     `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
       isActive ? 'text-zinc-900 dark:text-white' : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
     }`;
-  const learnActive = LEARN_NAV.some((i) => i.to === location.pathname);
+  const learnActive = LEARN_NAV.some((i) => i.to === pathname);
   const themeLabel = isDark ? 'Switch to light mode' : 'Switch to dark mode';
   const soundLabel = soundEnabled ? 'Turn sound off' : 'Turn sound on';
 
@@ -76,9 +80,9 @@ export const Header: React.FC = () => {
 
         <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
           {PRIMARY_NAV.map((item) => (
-            <NavLink key={item.to} to={item.to} className={linkClass}>
+            <Link key={item.to} href={item.to} className={linkClass({ isActive: pathname === item.to })}>
               {item.label}
-            </NavLink>
+            </Link>
           ))}
           <div ref={learnRef} className="relative">
             <button
@@ -99,8 +103,8 @@ export const Header: React.FC = () => {
                   {LEARN_NAV.map((item) => (
                     <li key={item.to}>
                       <Link
-                        to={item.to}
-                        aria-current={location.pathname === item.to ? 'page' : undefined}
+                        href={item.to}
+                        aria-current={pathname === item.to ? 'page' : undefined}
                         className="block rounded-lg px-3 py-2 hover:bg-zinc-100 aria-[current=page]:bg-zinc-100 dark:hover:bg-zinc-800 dark:aria-[current=page]:bg-zinc-800"
                       >
                         <span className="block text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.label}</span>
@@ -115,7 +119,7 @@ export const Header: React.FC = () => {
         </nav>
 
         <div className="flex items-center gap-1">
-          <Link to="/coin-flip-statistics" className={`${iconButton} hidden sm:inline-flex`} aria-label="Your statistics" title="Your statistics">
+          <Link href="/coin-flip-statistics" className={`${iconButton} hidden sm:inline-flex`} aria-label="Your statistics" title="Your statistics">
             <BarChart3 className="h-[18px] w-[18px]" />
           </Link>
           <button type="button" onClick={() => updateSettings({ soundEnabled: !soundEnabled })} className={iconButton} aria-label={soundLabel} title={soundLabel}>
@@ -131,10 +135,11 @@ export const Header: React.FC = () => {
       </div>
 
       {mobileOpen &&
+        typeof document !== 'undefined' &&
         createPortal(
           <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" aria-label="Menu">
             <div className="absolute inset-0 bg-zinc-950/40" onClick={() => setMobileOpen(false)} />
-            <div className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-pop dark:bg-zinc-950">
+            <div className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-pop dark:bg-zinc-950 overscroll-contain">
               <div className="flex h-16 items-center justify-between border-b border-zinc-200 px-4 dark:border-zinc-800">
                 <Logo onClick={() => setMobileOpen(false)} />
                 <button type="button" onClick={() => setMobileOpen(false)} className={iconButton} aria-label="Close menu" autoFocus>
@@ -153,9 +158,10 @@ export const Header: React.FC = () => {
                       {group.items.map((item) => (
                         <li key={item.to}>
                           <Link
-                            to={item.to}
-                            aria-current={location.pathname === item.to ? 'page' : undefined}
-                            className="block rounded-lg px-1 py-2 text-[15px] text-zinc-800 aria-[current=page]:font-semibold dark:text-zinc-200"
+                            href={item.to}
+                            onClick={() => setMobileOpen(false)}
+                            aria-current={pathname === item.to ? 'page' : undefined}
+                            className="block rounded-lg px-2 py-2.5 text-[15px] min-h-[44px] flex items-center text-zinc-800 aria-[current=page]:font-semibold dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
                           >
                             {item.label}
                           </Link>

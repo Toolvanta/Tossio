@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { CONSENT_EVENT, getConsent, setConsent, type ConsentChoice } from "../../lib/consent";
 
 /**
@@ -32,7 +34,7 @@ export const ConsentBanner: React.FC = () => {
       <p className="text-sm leading-6 text-zinc-700 dark:text-zinc-300">
         We use analytics cookies to see how many people play and which modes
         they enjoy. No ads, no selling data.{" "}
-        <Link to="/privacy" className="underline underline-offset-2">
+        <Link href="/privacy" className="underline underline-offset-2">
           Privacy policy
         </Link>
       </p>

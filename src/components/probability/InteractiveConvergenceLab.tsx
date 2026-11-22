@@ -93,10 +93,10 @@ export const InteractiveConvergenceLab: React.FC = () => {
           <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">
             Try it
           </span>
-          <h3 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-amber-500" />
+          <h2 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-amber-500" aria-hidden="true" />
             Watch it even out
-          </h3>
+          </h2>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
             Pick a number of flips and watch the share of heads drift towards 50%.
           </p>
@@ -110,7 +110,7 @@ export const InteractiveConvergenceLab: React.FC = () => {
               type="button"
               disabled={isRunning}
               onClick={() => runConvergenceSimulation(count)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-amber-400 ${
+              className={`min-h-[40px] px-3.5 py-2 rounded-xl text-xs font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-amber-400 ${
                 targetFlips === count && dataPoints.length > 0
                   ? 'bg-amber-500 text-white shadow-md'
                   : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-amber-100 dark:hover:bg-zinc-600'

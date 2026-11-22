@@ -1,22 +1,68 @@
+import React from 'react';
 import { describe, it, expect, beforeAll, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { ROUTES } from '../seo/routes';
-import App from '../App';
+import { CoinFlipProvider } from '../context/CoinFlipContext';
+import { Home } from '../views/Home';
+import { DecisionFlipPage } from '../views/DecisionFlipPage';
+import { DailyChallengePage } from '../views/DailyChallengePage';
+import { ExperimentPage } from '../views/ExperimentPage';
+import { ProbabilityPage } from '../views/ProbabilityPage';
+import { HowCoinFlippingWorksPage } from '../views/HowCoinFlippingWorksPage';
+import { StatisticsPage } from '../views/StatisticsPage';
+import { FAQPage } from '../views/FAQPage';
+import { AboutPage } from '../views/AboutPage';
+import { ContactPage } from '../views/ContactPage';
+import { PrivacyPage } from '../views/PrivacyPage';
+import { TermsPage } from '../views/TermsPage';
+import { HTMLSitemapPage } from '../views/HTMLSitemapPage';
+import { NotFoundPage } from '../views/NotFoundPage';
+
+const PAGE_MAP: Record<string, React.ComponentType> = {
+  '/': Home,
+  '/decision-coin-flip': DecisionFlipPage,
+  '/daily-coin-flip': DailyChallengePage,
+  '/coin-flip-experiment': ExperimentPage,
+  '/coin-flip-probability': ProbabilityPage,
+  '/how-coin-flipping-works': HowCoinFlippingWorksPage,
+  '/coin-flip-statistics': StatisticsPage,
+  '/faq': FAQPage,
+  '/about': AboutPage,
+  '/contact': ContactPage,
+  '/privacy': PrivacyPage,
+  '/terms': TermsPage,
+  '/sitemap': HTMLSitemapPage,
+};
 
 beforeAll(() => {
   window.scrollTo = () => {};
   window.matchMedia ??= ((q: string) => ({
-    matches: false, media: q, onchange: null,
-    addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {}, dispatchEvent: () => false,
+    matches: false,
+    media: q,
+    onchange: null,
+    addEventListener() {},
+    removeEventListener() {},
+    addListener() {},
+    removeListener() {},
+    dispatchEvent: () => false,
   })) as unknown as typeof window.matchMedia;
 });
+
 afterEach(cleanup);
 
 describe('every page renders with its SEO tags', () => {
   for (const route of ROUTES) {
     it(route.path, async () => {
       window.history.pushState({}, '', route.path);
-      render(<App />);
+      const Component = PAGE_MAP[route.path];
+      expect(Component).toBeDefined();
+
+      render(
+        <CoinFlipProvider>
+          <Component />
+        </CoinFlipProvider>
+      );
+
       const h1 = await screen.findByRole('heading', { level: 1 }, { timeout: 5000 });
       expect(h1.textContent?.length).toBeGreaterThan(0);
       await new Promise((r) => setTimeout(r, 0));
@@ -29,7 +75,11 @@ describe('every page renders with its SEO tags', () => {
 
   it('shows a noindex 404 for unknown URLs', async () => {
     window.history.pushState({}, '', '/nope');
-    render(<App />);
+    render(
+      <CoinFlipProvider>
+        <NotFoundPage />
+      </CoinFlipProvider>
+    );
     expect(await screen.findByRole('heading', { level: 1, name: /doesn’t exist/ })).toBeTruthy();
     expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toContain('noindex');
   });

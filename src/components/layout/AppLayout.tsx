@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { Award, X } from 'lucide-react';
 import { Header } from './Header';
@@ -29,7 +31,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
       </div>
 
       <Header />
-      <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
+      <main id="main-content" tabIndex={-1} className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12 focus:outline-none">
         {children}
       </main>
       <Footer />
@@ -50,10 +52,10 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
           <button
             type="button"
             onClick={dismissAchievementToast}
-            className="ml-2 rounded-md p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800"
-            aria-label="Dismiss"
+            className="ml-2 flex h-8 w-8 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400"
+            aria-label="Dismiss achievement notification"
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       )}

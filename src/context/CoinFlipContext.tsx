@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import type {
   AppStorageV1,
@@ -9,6 +11,7 @@ import type {
   DecisionOptions,
 } from '../types';
 import { loadAppData, saveAppData } from '../storage/persistence';
+import { DEFAULT_APP_STORAGE } from '../storage/storageSchema';
 import { flipFairCoin } from '../game/random';
 import { updateStreak } from '../game/streaks';
 import { calculateConsistentPercentages, INITIAL_OVERALL_STATS } from '../game/statistics';
@@ -46,7 +49,7 @@ interface CoinFlipContextType {
 const CoinFlipContext = createContext<CoinFlipContextType | null>(null);
 
 export const CoinFlipProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState<AppStorageV1>(() => loadAppData());
+  const [data, setData] = useState<AppStorageV1>(DEFAULT_APP_STORAGE);
   const [coinState, setCoinState] = useState<CoinState>('IDLE');
   const [latestResult, setLatestResult] = useState<CoinSide | null>(null);
   const [latestFlipNumber, setLatestFlipNumber] = useState<number>(0);
@@ -58,6 +61,18 @@ export const CoinFlipProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   dataRef.current = data;
 
   const isFlippingRef = useRef(false);
+  const isHydratedRef = useRef(false);
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    const loaded = loadAppData();
+    const today = getTodayDateString();
+    if (!loaded.dailyChallengeProgress[today]) {
+      loaded.dailyChallengeProgress[today] = generateDailyChallenge(today);
+    }
+    setData(loaded);
+    isHydratedRef.current = true;
+  }, []);
 
   // Apply active theme
   useTheme(data.settings.theme);
@@ -67,13 +82,16 @@ export const CoinFlipProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     soundFx.enabled = data.settings.soundEnabled;
   }, [data.settings.soundEnabled]);
 
-  // Persist state changes
+  // Persist state changes (only after hydration)
   useEffect(() => {
-    saveAppData(data);
+    if (isHydratedRef.current) {
+      saveAppData(data);
+    }
   }, [data]);
 
-  // Initialize today's daily challenge if missing
+  // Initialize today's daily challenge if missing on day changes
   useEffect(() => {
+    if (!isHydratedRef.current) return;
     const today = getTodayDateString();
     if (!data.dailyChallengeProgress[today]) {
       const newChallenge = generateDailyChallenge(today);

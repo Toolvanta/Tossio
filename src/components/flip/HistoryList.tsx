@@ -25,8 +25,8 @@ export const HistoryList: React.FC<HistoryListProps> = ({
   if (history.length === 0) {
     return (
       <div className="w-full max-w-2xl mx-auto p-6 bg-white dark:bg-zinc-800/90 rounded-2xl border border-zinc-200 dark:border-zinc-700 text-center">
-        <HistoryIcon className="w-8 h-8 mx-auto text-zinc-300 dark:text-zinc-600 mb-2" />
-        <h4 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">No flips yet</h4>
+        <HistoryIcon className="w-8 h-8 mx-auto text-zinc-300 dark:text-zinc-600 mb-2" aria-hidden="true" />
+        <h2 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">No flips yet</h2>
         <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">
           Your results will show up here as you flip.
         </p>
@@ -39,10 +39,10 @@ export const HistoryList: React.FC<HistoryListProps> = ({
       {/* Header controls */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-100 dark:border-zinc-700/60 pb-4">
         <div className="flex items-center gap-2">
-          <HistoryIcon className="w-5 h-5 text-amber-500" />
-          <h3 className="text-base font-semibold text-zinc-900 dark:text-white">
+          <HistoryIcon className="w-5 h-5 text-amber-500" aria-hidden="true" />
+          <h2 className="text-base font-semibold text-zinc-900 dark:text-white">
             Recent flips
-          </h3>
+          </h2>
           <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 font-mono">
             {history.length}
           </span>
@@ -54,7 +54,7 @@ export const HistoryList: React.FC<HistoryListProps> = ({
             <button
               type="button"
               onClick={() => setFilter('all')}
-              className={`px-2.5 py-1 rounded-lg transition-all ${
+              className={`min-h-[36px] px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400 ${
                 filter === 'all'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm font-semibold'
                   : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400'
@@ -65,7 +65,7 @@ export const HistoryList: React.FC<HistoryListProps> = ({
             <button
               type="button"
               onClick={() => setFilter('heads')}
-              className={`px-2.5 py-1 rounded-lg transition-all ${
+              className={`min-h-[36px] px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400 ${
                 filter === 'heads'
                   ? 'bg-amber-500 text-white shadow-sm font-semibold'
                   : 'text-zinc-500 hover:text-amber-600 dark:text-zinc-400'
@@ -76,7 +76,7 @@ export const HistoryList: React.FC<HistoryListProps> = ({
             <button
               type="button"
               onClick={() => setFilter('tails')}
-              className={`px-2.5 py-1 rounded-lg transition-all ${
+              className={`min-h-[36px] px-3 py-1.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400 ${
                 filter === 'tails'
                   ? 'bg-indigo-600 text-white shadow-sm font-semibold'
                   : 'text-zinc-500 hover:text-indigo-400 dark:text-zinc-400'
@@ -94,11 +94,11 @@ export const HistoryList: React.FC<HistoryListProps> = ({
                 onClearHistory();
               }
             }}
-            className="p-1.5 rounded-xl text-zinc-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+            className="flex h-9 w-9 items-center justify-center rounded-xl text-zinc-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
             title="Clear history"
             aria-label="Clear history"
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
       </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
@@ -37,7 +39,32 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, title, subtitle, ch
     panelRef.current?.focus();
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onCloseRef.current();
+      if (e.key === 'Escape') {
+        onCloseRef.current();
+        return;
+      }
+
+      if (e.key === 'Tab' && panelRef.current) {
+        const focusableElements = panelRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
     };
     document.addEventListener('keydown', onKey);
     return () => {
@@ -59,7 +86,7 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, title, subtitle, ch
         aria-modal="true"
         aria-labelledby="modal-title"
         tabIndex={-1}
-        className={`animate-modal-in relative w-full ${widths[maxWidth]} rounded-2xl border border-zinc-200 bg-white p-6 shadow-pop outline-none dark:border-zinc-800 dark:bg-zinc-900 sm:p-7`}
+        className={`animate-modal-in relative w-full ${widths[maxWidth]} rounded-2xl border border-zinc-200 bg-white p-6 shadow-pop outline-none dark:border-zinc-800 dark:bg-zinc-900 sm:p-7 overscroll-contain`}
       >
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
@@ -71,10 +98,10 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, title, subtitle, ch
           <button
             type="button"
             onClick={onClose}
-            className="-mr-2 -mt-1 rounded-lg p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
-            aria-label="Close"
+            className="-mr-2 -mt-1 flex h-11 w-11 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400"
+            aria-label="Close dialog"
           >
-            <X className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
         {children}

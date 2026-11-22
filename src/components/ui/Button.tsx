@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, LinkProps } from 'react-router-dom';
+import Link from 'next/link';
 
 type Variant = 'primary' | 'dark' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'accent';
 type Size = 'sm' | 'md' | 'lg';
@@ -47,9 +47,11 @@ export const Button: React.FC<ButtonProps> = ({
   </button>
 );
 
-interface ButtonLinkProps extends LinkProps {
+interface ButtonLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   variant?: Variant;
   size?: Size;
+  to?: string;
+  href?: string;
 }
 
 export const ButtonLink: React.FC<ButtonLinkProps> = ({
@@ -57,9 +59,14 @@ export const ButtonLink: React.FC<ButtonLinkProps> = ({
   size = 'md',
   className = '',
   children,
+  href,
+  to,
   ...props
-}) => (
-  <Link className={buttonClasses(variant, size, className)} {...props}>
-    {children}
-  </Link>
-);
+}) => {
+  const targetHref = href ?? to ?? '/';
+  return (
+    <Link href={targetHref} className={buttonClasses(variant, size, className)} {...props}>
+      {children}
+    </Link>
+  );
+};

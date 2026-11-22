@@ -21,10 +21,10 @@ export const SavedExperiments: React.FC<SavedExperimentsProps> = ({
   if (experiments.length === 0) {
     return (
       <div className="p-8 bg-white dark:bg-zinc-800/90 rounded-2xl border border-zinc-200 dark:border-zinc-700 text-center space-y-3">
-        <FlaskConical className="w-10 h-10 mx-auto text-zinc-300 dark:text-zinc-600" />
-        <h4 className="text-base font-semibold text-zinc-700 dark:text-zinc-200">
+        <FlaskConical className="w-10 h-10 mx-auto text-zinc-300 dark:text-zinc-600" aria-hidden="true" />
+        <h2 className="text-base font-semibold text-zinc-700 dark:text-zinc-200">
           No simulations yet
-        </h4>
+        </h2>
         <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
           Run a simulation above and it’ll be saved here, so you can compare runs of different sizes.
         </p>
@@ -37,9 +37,9 @@ export const SavedExperiments: React.FC<SavedExperimentsProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-700/60 pb-4">
         <div>
-          <h3 className="text-base font-semibold text-zinc-900 dark:text-white">
+          <h2 className="text-base font-semibold text-zinc-900 dark:text-white">
             Saved Experiments ({experiments.length})
-          </h3>
+          </h2>
           <p className="text-xs text-zinc-500 dark:text-zinc-400">
             Saved in your browser only.
           </p>
@@ -52,7 +52,7 @@ export const SavedExperiments: React.FC<SavedExperimentsProps> = ({
               onClearAll();
             }
           }}
-          className="text-xs font-semibold text-heads-600 hover:text-heads-700 dark:text-heads-400 dark:hover:text-heads-300 px-3 py-1.5 rounded-xl border border-heads-200 dark:border-heads-900/50 hover:bg-heads-50 dark:hover:bg-heads-950/40 transition-colors"
+          className="text-xs font-semibold text-heads-600 hover:text-heads-700 dark:text-heads-400 dark:hover:text-heads-300 min-h-[44px] px-3.5 py-2 rounded-xl border border-heads-200 dark:border-heads-900/50 hover:bg-heads-50 dark:hover:bg-heads-950/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400"
         >
           Clear All
         </button>
@@ -134,20 +134,20 @@ export const SavedExperiments: React.FC<SavedExperimentsProps> = ({
               <button
                 type="button"
                 onClick={() => onView(exp)}
-                className="p-2 rounded-xl text-zinc-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-zinc-800 transition-colors"
+                className="flex h-11 w-11 items-center justify-center rounded-xl text-zinc-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-zinc-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
                 title="Show details"
                 aria-label="Show details"
               >
-                <Eye className="w-4 h-4" />
+                <Eye className="w-4 h-4" aria-hidden="true" />
               </button>
               <button
                 type="button"
                 onClick={() => onDelete(exp.id)}
-                className="p-2 rounded-xl text-zinc-400 hover:text-heads-500 hover:bg-heads-50 dark:hover:bg-zinc-800 transition-colors"
+                className="flex h-11 w-11 items-center justify-center rounded-xl text-zinc-400 hover:text-heads-500 hover:bg-heads-50 dark:hover:bg-zinc-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400"
                 title="Delete"
                 aria-label="Delete"
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           </div>

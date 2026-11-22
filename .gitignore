@@ -1,7 +1,9 @@
 # Dependencies
 node_modules/
 
-# Build output
+# Next.js build output
+.next/
+out/
 dist/
 
 # Editor directories and files
@@ -25,4 +27,4 @@ Thumbs.db
 
 # TypeScript cache
 *.tsbuildinfo
-
+next-env.d.ts

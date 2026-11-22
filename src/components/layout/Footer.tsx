@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Globe, Mail } from 'lucide-react';
 import { Logo } from './Logo';
 import { FOOTER_GROUPS, SITE_LINKS } from './nav';
@@ -35,7 +35,7 @@ export const Footer: React.FC = () => (
                   {...(href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener' })}
                   aria-label={label}
                   title={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 hover:border-zinc-300 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:text-white"
+                  className="flex min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 sm:min-h-[36px] sm:min-w-[36px] items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 hover:border-zinc-300 hover:text-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
                 </a>
@@ -49,7 +49,7 @@ export const Footer: React.FC = () => (
             <ul className="mt-3 space-y-2">
               {group.items.map((item) => (
                 <li key={item.to}>
-                  <Link to={item.to} className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                  <Link href={item.to} className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
                     {item.label}
                   </Link>
                 </li>
@@ -69,7 +69,7 @@ export const Footer: React.FC = () => (
         <ul className="flex flex-wrap gap-x-5 gap-y-2">
           {SITE_LINKS.map((item) => (
             <li key={item.to}>
-              <Link to={item.to} className="hover:text-zinc-900 dark:hover:text-white">
+              <Link href={item.to} className="hover:text-zinc-900 dark:hover:text-white">
                 {item.label}
               </Link>
             </li>

@@ -40,19 +40,31 @@ export const websiteJsonLd = (): JsonLd => ({
   publisher: { '@id': ORG_ID },
 });
 
-export const appJsonLd = (path: string, name: string, description: string): JsonLd => ({
+export const appJsonLd = (
+  path: string,
+  name: string,
+  description: string,
+  options?: {
+    features?: string[];
+    category?: string;
+    keywords?: string[];
+  }
+): JsonLd => ({
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name,
   description,
   url: absoluteUrl(path),
   image: absoluteUrl(SITE.ogImage),
-  applicationCategory: 'GameApplication',
+  applicationCategory: options?.category || 'GameApplication',
+  applicationSubCategory: options?.category || 'UtilitiesApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
   inLanguage: 'en',
   isAccessibleForFree: true,
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  ...(options?.features && options.features.length > 0 ? { featureList: options.features } : {}),
+  ...(options?.keywords && options.keywords.length > 0 ? { keywords: options.keywords.join(', ') } : {}),
   author: { '@type': 'Person', name: SITE.author.name, url: SITE.author.url },
   publisher: { '@id': ORG_ID },
 });

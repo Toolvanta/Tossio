@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { SITE } from '../../seo/site';
 
 export const LogoMark: React.FC<{ className?: string }> = ({ className = 'h-7 w-7' }) => (
@@ -14,7 +14,7 @@ export const LogoMark: React.FC<{ className?: string }> = ({ className = 'h-7 w-
 );
 
 export const Logo: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
-  <Link to="/" onClick={onClick} className="flex items-center gap-2 rounded-md text-zinc-900 dark:text-white" aria-label={`${SITE.name} home`}>
+  <Link href="/" onClick={onClick} className="flex items-center gap-2 rounded-md text-zinc-900 dark:text-white" aria-label={`${SITE.name} home`}>
     <LogoMark />
     <span className="text-[17px] font-semibold tracking-tight">{SITE.name}</span>
   </Link>

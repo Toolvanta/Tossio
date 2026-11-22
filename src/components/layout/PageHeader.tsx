@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { getBreadcrumbs } from '../../seo/routes';
 
 interface PageHeaderProps {
@@ -13,8 +16,8 @@ interface PageHeaderProps {
 
 /** Breadcrumbs + H1 + intro used at the top of every inner page. */
 export const PageHeader: React.FC<PageHeaderProps> = ({ title, intro, path, align = 'left', children }) => {
-  const { pathname } = useLocation();
-  const crumbs = getBreadcrumbs(path ?? pathname);
+  const pathname = usePathname();
+  const crumbs = getBreadcrumbs(path ?? pathname ?? '/');
 
   return (
     <header className={`mb-10 ${align === 'center' ? 'mx-auto max-w-2xl text-center' : 'max-w-3xl'}`}>
@@ -29,7 +32,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ title, intro, path, alig
                     {c.label}
                   </span>
                 ) : (
-                  <Link to={c.path} className="hover:text-zinc-900 dark:hover:text-white">
+                  <Link href={c.path} className="hover:text-zinc-900 dark:hover:text-white">
                     {c.label}
                   </Link>
                 )}

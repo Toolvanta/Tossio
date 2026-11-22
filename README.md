@@ -52,25 +52,26 @@ npm install
 npm run dev
 ```
 
-Then open <http://localhost:5173>.
+Then open <http://localhost:3000>.
 
 ### Scripts
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Start the development server with hot reload |
-| `npm run build` | Type-check and build the production site into `dist/` |
-| `npm run preview` | Serve the production build locally |
+| `npm run dev` | Start the Next.js development server with Turbopack |
+| `npm run build` | Type-check and build the production static export into `.next/` |
+| `npm run start` | Serve the production build locally |
 | `npm test` | Run the tests (Vitest) |
 
-The production build also writes a separate HTML file for every page, each with its own title,
-description and social-preview tags, plus `sitemap.xml`, `robots.txt` and `404.html`.
+The production build automatically prerenders every page as static content with full SEO metadata,
+social preview tags, dynamic `sitemap.xml`, and `robots.txt`.
 
 ## Project structure
 
 ```text
 src/
-  pages/            One component per page
+  app/              Next.js App Router (pages, layout, sitemap, robots, 404)
+  views/            Interactive views and page contents
   components/       Coin, controls, stats, tools, layout and UI pieces
   context/          App state: flips, streaks, experiments, achievements, settings
   game/             Randomness, streaks, statistics, experiments, daily challenges, sounds
@@ -78,8 +79,8 @@ src/
   seo/              Site config, per-page SEO metadata and structured data
   storage/          localStorage persistence
   __tests__/        Unit tests and a render test for every page
-scripts/seoPlugin.ts  Build step that writes per-page HTML and the sitemap
-vercel.json           Hosting config: page routing, redirects, caching headers
+next.config.mjs     Next.js config: redirects and security headers
+vercel.json         Hosting config: permanent redirects, caching headers
 ```
 
 Good places to start:
@@ -91,11 +92,11 @@ Good places to start:
 
 ## Tech stack
 
-React 19, TypeScript, Vite, Tailwind CSS, React Router and Vitest. Hosted on Vercel.
+Next.js (App Router), React 19, TypeScript, Tailwind CSS, Vitest. Hosted on Vercel.
 
 ## Deploying
 
-Import the repository into Vercel; it reads the build settings from `vercel.json`. If you deploy
+Import the repository into Vercel; it automatically detects Next.js. If you deploy
 somewhere else or use a different domain, update `url` in `src/seo/site.ts`.
 
 ## Contributing

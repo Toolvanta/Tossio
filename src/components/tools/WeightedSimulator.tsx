@@ -36,15 +36,15 @@ export const WeightedSimulator: React.FC<WeightedSimulatorProps> = ({ onSimulati
         <span className="text-xs font-semibold text-heads-600 dark:text-heads-400">
           Weighted coin
         </span>
-        <h3 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
-          <Sliders className="w-5 h-5 text-heads-500" />
+        <h2 className="text-xl font-semibold text-zinc-900 dark:text-white flex items-center gap-2">
+          <Sliders className="w-5 h-5 text-heads-500" aria-hidden="true" />
           What if the coin was unfair?
-        </h3>
+        </h2>
       </div>
 
       {/* Prominent Disclaimer Requirement */}
       <div className="p-4 bg-amber-50 dark:bg-amber-950/40 rounded-2xl border border-amber-200 dark:border-amber-800 flex items-start gap-3 text-amber-900 dark:text-amber-200 text-xs leading-relaxed">
-        <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+        <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
         <div>
           <strong className="block font-semibold mb-0.5">Just so you know:</strong>
           this coin is unfair on purpose. The normal coin flip on Tossio is always exactly 50/50.
@@ -56,22 +56,27 @@ export const WeightedSimulator: React.FC<WeightedSimulatorProps> = ({ onSimulati
         {/* Sliders */}
         <div className="space-y-3 p-4 bg-zinc-50 dark:bg-zinc-900/40 rounded-2xl border border-zinc-100 dark:border-zinc-800">
           <div className="flex items-center justify-between text-sm font-semibold">
-            <span className="text-amber-600 dark:text-amber-400">
+            <label htmlFor="weighted-heads-range" className="text-amber-600 dark:text-amber-400 cursor-pointer">
               Heads Probability: {headsPct}%
-            </span>
+            </label>
             <span className="text-indigo-600 dark:text-indigo-400">
               Tails Probability: {tailsPct}%
             </span>
           </div>
 
           <input
+            id="weighted-heads-range"
             type="range"
             min="0"
             max="100"
             step="1"
             value={headsPct}
+            aria-label="Heads probability percentage"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={headsPct}
             onChange={(e) => setHeadsPct(parseInt(e.target.value, 10))}
-            className="w-full h-2.5 bg-zinc-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
+            className="w-full h-3 bg-zinc-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
           />
 
           <div className="flex justify-between text-xs text-zinc-400 font-mono">
@@ -83,16 +88,16 @@ export const WeightedSimulator: React.FC<WeightedSimulatorProps> = ({ onSimulati
 
         {/* Flips Count presets & input */}
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
+          <span className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
             Number of flips
-          </label>
+          </span>
           <div className="flex flex-wrap gap-2">
             {[100, 500, 1000, 10000, 50000].map((num) => (
               <button
                 key={num}
                 type="button"
                 onClick={() => setFlipCount(num)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-heads-400 ${
                   flipCount === num
                     ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-sm'
                     : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200'
